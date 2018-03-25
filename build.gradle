@@ -1,0 +1,18 @@
+plugins {
+    id "io.spring.dependency-management" version "1.0.4.RELEASE"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:$freedom.versions.spring_boot"
+    }
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "com.google.code.findbugs:jsr305:1.3.9"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+    testCompile 'junit:junit'
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+}
+

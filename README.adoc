@@ -1,0 +1,30 @@
+= freedom-backend
+xiayx <xiayouxue@hotmail.com>
+v1.0, 2018-03-25: SNAPSHOT
+:doctype: docbook
+:toc: left
+:numbered:
+
+为后台开发提供便利。
+
+== 操作组件
+
+=== 需求
+项目中，新增、查看、修改时，会跳到同一个详情页。
+在详情页上，需要根据具体操作，进行针对性的处理。
+提供操作组件，为详情页的开发提供便利。
+
+=== 设计
+根据请求路径，解析出具体的操作，再将操作存储在请求属性中，页面上再根据此属性进行针对性处理。
+
+=== 实现
+* OperationInterceptor: 拦截请求
+* OperationParser: 从请求中解析出操作
+** OperationParserImpl: 默认的解析器实现
+* OperationProperties: 操作配置属性
+* OperationAutoConfiguration: 支持spring-boot的自动配置
+* Operation: 操作信息
+
+=== 待解决
+[qanda]
+使用``@ConfigurationProperties``获取属性后，属性中的部分字符被自动过滤，例如：/、* 等？:: &nbsp;
