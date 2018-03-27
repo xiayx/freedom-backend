@@ -4,6 +4,11 @@ v1.0, 2018-03-25: SNAPSHOT
 :doctype: docbook
 :toc: left
 :numbered:
+:imagesdir: assets/images
+:sourcedir: src/main/java
+:resourcesdir: src/main/resources
+:testsourcedir: src/test/java
+:source-highlighter: highlightjs
 
 为后台开发提供便利。
 
@@ -28,3 +33,55 @@ v1.0, 2018-03-25: SNAPSHOT
 === 待解决
 [qanda]
 使用``@ConfigurationProperties``获取属性后，属性中的部分字符被自动过滤，例如：/、* 等？:: &nbsp;
+
+
+== 关联组件
+用于设置关联对象。
+
+=== 需求
+项目中会有这种情况，一个**主实体类**通过一个**关联主键**关联一个**关联实体类**，
+数据库中记录着**关联主键**的值，实际使用时需要通过**关联主键**取得**关联对象**。
+
+.主实体类（省略getter/setter）
+[source%nowrap,java]
+----
+include::{testsourcedir}/org/freedom/backend/associate/Main.java[tags=entity]
+----
+
+.关联实体类（省略getter/setter）
+[source%nowrap,java]
+----
+include::{testsourcedir}/org/freedom/backend/associate/Associate.java[tags=entity]
+----
+
+当从数据库查询**主实体类**时，只取出了**关联主键**，我们可以通过**关联组件**辅助设置**关联对象**。
+
+=== 设计
+.主流程：
+* 取得关联对象
+* 为主实体对象设置关联对象
+
+.关联对象取得方式：
+* 由调用者自行提供
+* 通过关联主键查询取得
+
+.主实体对象的表现形式：
+* 单一对象
+* 集合对象
+
+.关联对象的表现形式：
+* 单一对象
+* 集合对象
+
+
+=== 实现
+* AssociateUtils：工具类提供通用的设置方法，设置方法一共8个（主实体对象表现形式[2]*关联对象表现形式[2]*关联对象取得方式[2]=8）
+** setAssociate：关联对象为单一对象的情况
+** setCollectionAssociate：关联对象为集合对象的情况
+* AssociateSource：关联对象源，用于提供单一关联对象
+* CollectionAssociateSource：集合关联对象源，用于提供集合关联对象
+
+=== 待完善
+* AssociateService，提供更加简单易用的接口
+** 根据关联对象属性推测关联主键属性
+** 设置默认的主键属性

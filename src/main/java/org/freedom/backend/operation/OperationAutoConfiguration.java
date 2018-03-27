@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 
 /**
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableConfigurationProperties(OperationProperties.class)
-public class OperationAutoConfiguration implements WebMvcConfigurer {
+public class OperationAutoConfiguration extends WebMvcConfigurerAdapter {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -44,7 +45,8 @@ public class OperationAutoConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         HandlerInterceptor interceptor = operationInterceptor();
-        logger.debug("取得操作拦截器: {}", interceptor);
+        logger.debug("使用操作拦截器: {}", interceptor);
         registry.addInterceptor(interceptor).addPathPatterns(operationProperties.getPatterns());
     }
+
 }
